@@ -1,5 +1,5 @@
 ---
-- hosts: default
+- hosts: pubcloud
   vars:
     devstack_repo: git://github.com/openstack-dev/devstack.git
     public_ip: 192.168.27.100
@@ -9,7 +9,7 @@
     neutron: True
     neutron_lbaasv2: False
     swift: False
-    security_groups: False
+    security_groups: True 
     tempest: False
     keyring_config_dir: /home/vagrant/.local/share/python_keyring
     app_catalog: False
