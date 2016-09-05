@@ -1,3 +1,11 @@
+# Datacentred PoC Community Cloud Gateway
+
+Original work based on: https://github.com/lorin/devstack-vm/
+
+Extended to create 2 clouds (plus appropriate network changes) and a gateway
+
+TODO: VLAN tagging via vagrant-vlan
+
 # Neutron-enabled DevStack in a Vagrant VM with Ansible
 
 This repository contains a Vagrantfile and an accompanying Ansible playbook
