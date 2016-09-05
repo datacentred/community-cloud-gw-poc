@@ -9,7 +9,8 @@
     neutron: True
     neutron_lbaasv2: False
     swift: False
-    security_groups: True 
+    #security_groups: True 
+    security_groups: False
     tempest: False
     keyring_config_dir: /home/vagrant/.local/share/python_keyring
     app_catalog: False

@@ -14,10 +14,10 @@ Vagrant.configure("2") do |config|
     pub.vm.network :private_network, ip: "172.24.4.225", :netmask => "255.255.255.0", 
       :auto_config => false, virtualbox__intnet: "pubcloud"
     pub.vm.provider :virtualbox do |vb|
-        vb.customize ["modifyvm", :id, "--memory", 4096]
+        vb.customize ["modifyvm", :id, "--memory", 6192]
         vb.customize ["modifyvm", :id, "--cpus", 4]
        	# eth2 must be in promiscuous mode for floating IPs to be accessible
-       	#vb.customize ["modifyvm", :id, "--nicpromisc3", "allow-all"]
+       	vb.customize ["modifyvm", :id, "--nicpromisc3", "allow-all"]
     end
     pub.vm.provision :ansible do |ansible|
         ansible.host_key_checking = false
@@ -39,10 +39,10 @@ Vagrant.configure("2") do |config|
     com.vm.network :private_network, ip: "172.24.6.225", :netmask => "255.255.255.0", 
       :auto_config => false, virtualbox__intnet: "comcloud"
     com.vm.provider :virtualbox do |vb|
-        vb.customize ["modifyvm", :id, "--memory", 4096]
+        vb.customize ["modifyvm", :id, "--memory", 6192]
         vb.customize ["modifyvm", :id, "--cpus", 4]
        	# eth2 must be in promiscuous mode for floating IPs to be accessible
-       	#vb.customize ["modifyvm", :id, "--nicpromisc3", "allow-all"]
+       	vb.customize ["modifyvm", :id, "--nicpromisc3", "allow-all"]
     end
     com.vm.provision :ansible do |ansible|
         ansible.host_key_checking = false
@@ -58,10 +58,10 @@ Vagrant.configure("2") do |config|
   config.vm.define "gateway" do |gw|
     gw.vm.box = "ubuntu/xenial64"
     gw.ssh.forward_agent = true
-    gw.vm.network :private_network, ip: "192.168.27.1", :netmask => "255.255.255.0",
-       :auto_config => false, virtualbox__intnet: "pubcloud", nic_type: "virtio"
-    gw.vm.network :private_network, ip: "192.168.29.1", :netmask => "255.255.255.0",
-       :auto_config => false, virtualbox__intnet: "comcloud", nic_type: "virtio"
+    gw.vm.network :private_network, ip: "172.24.4.5", :netmask => "255.255.255.0",
+       virtualbox__intnet: "pubcloud"
+    gw.vm.network :private_network, ip: "172.24.6.5", :netmask => "255.255.255.0",
+       virtualbox__intnet: "comcloud"
     gw.vm.provider :virtualbox do |vb|
         vb.customize ["modifyvm", :id, "--memory", 512]
         vb.customize ["modifyvm", :id, "--cpus", 1]
