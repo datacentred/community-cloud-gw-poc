@@ -50,14 +50,18 @@ Vagrant.configure("2") do |config|
         ansible.verbose = "v"
     end
     com.vm.provision :shell, :inline => "sed -i 's/172.24.4.0/172.24.6.0/g' /home/vagrant/devstack/stackrc"
+    com.vm.provision :shell, :inline => "sed -i 's/172.24.4/172.24.6/g' /home/vagrant/devstack/lib/neutron-legacy"
+    com.vm.provision :shell, :inline => "sed -i 's/172.24.4/172.24.6/g' /home/vagrant/devstack/tools/xen/xenrc"
     com.vm.provision :shell, :inline => "cd devstack; sudo -u vagrant env HOME=/home/vagrant ./stack.sh"
     com.vm.provision :shell, :inline => "ovs-vsctl add-port br-ex eth2"
     com.vm.provision :shell, :inline => "virsh net-destroy default"
   end
 
   config.vm.define "gateway" do |gw|
-    gw.vm.box = "ubuntu/xenial64"
+    gw.vm.box = "bento/ubuntu-16.04"
     gw.ssh.forward_agent = true
+    gw.vm.provision "shell", path: "scripts/gateway.sh"
+    gw.vm.synced_folder ".", "/test"
     gw.vm.network :private_network, ip: "172.24.4.5", :netmask => "255.255.255.0",
        virtualbox__intnet: "pubcloud"
     gw.vm.network :private_network, ip: "172.24.6.5", :netmask => "255.255.255.0",
