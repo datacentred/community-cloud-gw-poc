@@ -60,6 +60,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "gateway" do |gw|
     gw.vm.box = "bento/ubuntu-16.04"
     gw.ssh.forward_agent = true
+    gw.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
     gw.vm.provision "shell", path: "scripts/gateway.sh"
     gw.vm.synced_folder ".", "/test"
     gw.vm.network :private_network, ip: "172.24.4.5", :netmask => "255.255.255.0",
