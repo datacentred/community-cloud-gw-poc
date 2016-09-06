@@ -4,13 +4,12 @@
     devstack_repo: git://github.com/openstack-dev/devstack.git
     public_ip: 192.168.29.100
     version: stable/mitaka
-    floating_ip_range: 172.24.4.0/24
+    floating_ip_range: 172.24.6.0/24
     heat: False
     neutron: True
     neutron_lbaasv2: False
     swift: False
-    #security_groups: True 
-    security_groups: False
+    security_groups: False 
     tempest: False
     keyring_config_dir: /home/vagrant/.local/share/python_keyring
     app_catalog: False
