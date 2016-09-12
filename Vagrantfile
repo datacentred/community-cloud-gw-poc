@@ -57,12 +57,12 @@ Vagrant.configure("2") do |config|
     com.vm.provision :shell, :inline => "virsh net-destroy default"
   end
 
-  config.vm.define "gateway-1" do |gw|
-    gw.vm.box = "ubuntu/xenial64"
+  config.vm.define "gateway1" do |gw|
+    gw.vm.box = "ubuntu/trusty64"
+    gw.vm.hostname = 'gateway1'
     gw.ssh.forward_agent = true
     gw.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
-    gw.vm.provision "shell", path: "scripts/gateway.sh"
-    gw.vm.synced_folder ".", "/test"
+    #gw.vm.provision "shell", path: "scripts/gateway.sh"
     gw.vm.network :private_network, ip: "172.24.4.5", :netmask => "255.255.255.0",
        virtualbox__intnet: "pubcloud"
     gw.vm.network :private_network, ip: "172.24.6.5", :netmask => "255.255.255.0",
@@ -74,19 +74,20 @@ Vagrant.configure("2") do |config|
         vb.customize ["modifyvm", :id, "--cpus", 1]
     end
   end
-  config.vm.define "gateway-2" do |gw|
-    gw.vm.box = "ubuntu/xenial64"
-    gw.ssh.forward_agent = true
-    gw.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
-    gw.vm.provision "shell", path: "scripts/gateway.sh"
-    #gw.vm.synced_folder ".", "/test"
-    gw.vm.network :private_network, ip: "172.24.4.5", :netmask => "255.255.255.0",
+
+  config.vm.define "gateway2" do |gw2|
+    gw2.vm.box = "ubuntu/trusty64"
+    gw2.vm.hostname = 'gateway2'
+    gw2.ssh.forward_agent = true
+    gw2.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
+    #gw2.vm.provision "shell", path: "scripts/gateway.sh"
+    gw2.vm.network :private_network, ip: "172.24.4.5", :netmask => "255.255.255.0",
        virtualbox__intnet: "pubcloud", :auto_config => false
-    gw.vm.network :private_network, ip: "172.24.6.5", :netmask => "255.255.255.0",
+    gw2.vm.network :private_network, ip: "172.24.6.5", :netmask => "255.255.255.0",
        virtualbox__intnet: "comcloud", :auto_config => false
-    gw.vm.network :private_network, ip: "172.24.8.5", :netmask => "255.255.255.0",
+    gw2.vm.network :private_network, ip: "172.24.8.5", :netmask => "255.255.255.0",
        virtualbox__intnet: "control", :auto_config => false
-    gw.vm.provider :virtualbox do |vb|
+    gw2.vm.provider :virtualbox do |vb|
         vb.customize ["modifyvm", :id, "--memory", 512]
         vb.customize ["modifyvm", :id, "--cpus", 1]
     end
@@ -97,7 +98,7 @@ Vagrant.configure("2") do |config|
     control.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
     control.vm.provision "shell", path: "scripts/control.sh"
     control.vm.network "forwarded_port", guest: 4440, host: 4440 
-    control.vm.network :private_network, ip: "172.24.8.5", :netmask => "255.255.255.0",
+    control.vm.network :private_network, ip: "172.24.8.6", :netmask => "255.255.255.0",
        virtualbox__intnet: "control"
     config.vm.provider :virtualbox do |vb|
         vb.customize ["modifyvm", :id, "--memory", 1024]
