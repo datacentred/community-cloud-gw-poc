@@ -7,12 +7,13 @@
     floating_ip_range: 172.24.4.0/24
     heat: False
     neutron: True
-    neutron_lbaasv2: False
+    neutron_lbaasv2: True
     swift: False
     security_groups: False 
     tempest: False
     keyring_config_dir: /home/vagrant/.local/share/python_keyring
     app_catalog: False
+    magnum: True 
 
   tasks:
     - name: create keyring config directory

@@ -72,3 +72,14 @@ disable_service tempest
 {% if app_catalog %}
 enable_plugin app-catalog-ui https://git.openstack.org/openstack/app-catalog-ui
 {% endif %}
+
+{% if magnum %}
+# magnum requires the following to be set correctly
+PUBLIC_INTERFACE=eth1
+
+# Enable magnum plugin after dependent plugins
+enable_plugin magnum https://git.openstack.org/openstack/magnum {{ version }}
+
+# Optional:  uncomment to enable the Magnum UI plugin in Horizon
+enable_plugin magnum-ui https://github.com/openstack/magnum-ui {{ version }}
+{% endif %}
